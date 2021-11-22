@@ -2,6 +2,9 @@ import pygame
 from Button import Button
 from sys import exit
 
+# A simple instructions state that shows the player how to play the game. The instructions are written on the background
+# surface and displayed, with the only functionality being the button on the bottom.
+
 
 class InstructionsState:
     def __init__(self, window):

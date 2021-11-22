@@ -1,5 +1,7 @@
 import pygame
 
+# Player class that controls player movement. Only one player object is made in the game state.
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, window):

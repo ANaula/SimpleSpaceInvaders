@@ -2,6 +2,9 @@ import pygame
 from random import randint
 import math
 
+# The health and shield drops the player can pick up to gain more health and shield. They spawn randomly behind the top
+# window edge but has a specific range limiting where its y coordinate should be, similar to enemy objects.
+
 
 class Drops(pygame.sprite.Sprite):
     def __init__(self, window, drop_type):

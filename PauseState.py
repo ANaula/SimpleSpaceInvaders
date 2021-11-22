@@ -2,6 +2,7 @@ import pygame
 from Button import Button
 from sys import exit
 
+# Pause state is usually run when the player presses the esc key in the game state.
 
 class PauseState:
     def __init__(self, window):

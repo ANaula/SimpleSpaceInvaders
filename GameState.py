@@ -7,17 +7,28 @@ from random import randrange
 from drops import Drops
 import math
 
+# Game state controls the game itself including the player controls, enemy spawns, health and armor spawns, level
+# control, health and shield counters, planet life counter, and player and enemy laser and shell control.
+# The goal of the game is to get as many points as possible as each level spawns more and more enemies as well as
+# more health and armor pickups.
+
 
 class GamesState:
     def __init__(self, window):
         self.window = window
         self.background_surface = pygame.image.load("images/spacebackground.png").convert_alpha()
+
+        # Player and enemy sprite groups. Enemies are added to their sprite group as the levels progress
         self.player_group = pygame.sprite.GroupSingle()
         self.player_group.add(Player(self.window.get_width()/2, self.window.get_height()/2+300, self.window))
         self.enemies_group = pygame.sprite.Group()
+
+        # Game variables
         self.level = 0
         self.player_health = 10
         self.world_health = 15
+
+        # Health and shield bar variables
         self.total_player_health_surface = pygame.Surface((100, 20))
         self.total_player_health_surface.fill((105, 105, 105))
         self.total_player_health_rect = self.total_player_health_surface.get_rect(center=(self.player_group.sprite.rect.centerx, self.player_group.sprite.rect.centery + 80))
@@ -28,10 +39,14 @@ class GamesState:
         self.shield_surface = pygame.Surface((self.shield_number * 10, 20))
         self.shield_surface.fill((96, 123, 141))
         self.shield_rect = self.shield_surface.get_rect(center=(self.player_group.sprite.rect.centerx, self.player_group.sprite.rect.centery + 80))
+
+        # laser variables
         self.player_lasers = pygame.sprite.Group()
         self.player_laser_cooldown = 0
         self.enemy_lasers = pygame.sprite.Group()
         self.enemy_shells = pygame.sprite.Group()
+
+        # level transition variables
         self.transition = False
         self.text_font = pygame.font.Font("font/Lato-BlackItalic.ttf", 150)
         self.small_text_font = pygame.font.Font("font/Lato-Regular.ttf", 40)
@@ -39,16 +54,24 @@ class GamesState:
         self.transition_surface = None
         self.transition_rect = None
         self.transition_time = 7
+
+        # Game over detection variables
         self.game_over = False
         self.end_game_surface = self.end_font.render("Game Over", False, (255, 255, 255))
         self.end_game_rect = self.end_game_surface.get_rect(center=(self.window.get_width()/2, -20))
+
+        # Planet health variables
         self.world_health_surface = self.small_text_font.render("Planet Health: ", False, (255, 255, 255))
         self.world_health_rect = self.world_health_surface.get_rect(topleft=(10, 10))
         self.world_health_number_surface = self.small_text_font.render(f"{self.world_health}", False, (255, 255, 255))
         self.world_health_number_rect = self.world_health_number_surface.get_rect(topleft=self.world_health_rect.topright)
+
+        # Points display variables
         self.points = 0
         self.points_surface = self.small_text_font.render(f"Points: {self.points}", False, (255, 255, 255))
         self.points_rect = self.points_surface.get_rect(topright=(self.window.get_width()-10, 10))
+
+        # health and shield drops and shield variables
         self.health_drops_group = pygame.sprite.Group()
         self.shield_drops_group = pygame.sprite.Group()
         self.shield_font = pygame.font.Font("font/Lato-Regular.ttf", 20)
@@ -57,11 +80,14 @@ class GamesState:
         self.shield_destroyed = False
         self.shield_down_timer_length = 11
         self.shield_down_timer = self.shield_down_timer_length
+
         self.pickup_list = []
         self.paused = False
         self.state_done = False
         self.end_game_timer = 15
         self.next_state = "Game"
+
+        # Sounds
         self.next_level_sound = pygame.mixer.Sound("sounds/next_level.wav")
         self.next_level_sound.set_volume(0.5)
         self.player_laser_shot_sound = pygame.mixer.Sound("sounds/player_laser_fire.wav")
@@ -248,6 +274,9 @@ class GamesState:
                 self.transition = False
                 self.transition_time = 5
 
+# The game runs as normal until either there is a transition period where a new level starts and text displaying the
+# level number appears or if the game is over.
+
     def update(self):
         if not self.transition and not self.game_over:
             self.end_check()
@@ -295,6 +324,8 @@ class GamesState:
             self.window.blit(self.transition_surface, self.transition_rect)
         elif self.game_over:
             self.window.blit(self.end_game_surface, self.end_game_rect)
+
+# Here, the amount of enemies and drops that spawn depend on what the level is.
 
     def level_check(self):
         if not self.enemies_group:
@@ -408,6 +439,9 @@ class GamesState:
             clock.tick(60)
         pygame.mixer.music.stop()
 
+# Get_stats and get_paused is needed since the game class needs those stats to run the ScoreState and we need to know
+# if the gamestate loop was stopped due to pausing or the player losing. This will determine if we delete the GameState
+# or push it down the state_queue
 
     def get_stats(self):
         stats = [self.points, self.level]
@@ -416,7 +450,6 @@ class GamesState:
     def get_paused(self):
         return self.paused
 
-# sound effects
 
 
 

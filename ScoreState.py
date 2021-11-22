@@ -4,6 +4,9 @@ from ScoreEnemies import ScoreEnemy
 from sys import exit
 from Button import Button
 
+# State that runs after the end of a game state where the player loses. It displays the points the player received in
+# and the level the player reached. Enemies spawn from the left and move across to the right and keep spawning and
+# moving until the score state is ended.
 
 class ScoreState:
     def __init__(self, window, stats):
@@ -99,5 +102,3 @@ class ScoreState:
             clock.tick(60)
         pygame.mixer.music.stop()
 
-# main menu, pause, how to play
-# Main menu moving enemies going across the screen? showing a mothership?

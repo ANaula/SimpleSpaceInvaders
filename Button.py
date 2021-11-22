@@ -1,5 +1,10 @@
 import pygame
 
+# This button class detects if the player is hovering their mouse over a button and changes the color of that button.
+# Can also detect when the button is clicked and changes the color of the button then as well. The actions that occur
+# after the button is clicked have to be defined in the states themselves, but usually involve ending that state's
+# loop and changing their next_state variable
+
 
 class Button:
     def __init__(self, window, x, y, width, height, default_color, hover_color, click_color, text):

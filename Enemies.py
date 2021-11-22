@@ -1,6 +1,9 @@
 import pygame
 from random import randint
 
+# Enemies that are used in the game state. They spawn randomly above the top window edge but have a range of what
+# their y coordinate could be. Similar to how drops spawn.
+
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, window):

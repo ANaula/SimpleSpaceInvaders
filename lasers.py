@@ -1,5 +1,10 @@
 import pygame
 
+# Controls the lasers and shells that are fired by both the enemies and the player in the game state  These lasers are
+# differentiated by who shot them when defined and that decides what sprite they get and what speed they go at. If an
+# enemy shoots a shell, it also gets a different sprite which moves at a different speed. Whether the enemy shoots a
+# laser or shell is determined in the game state.
+
 
 class Laser(pygame.sprite.Sprite):
     def __init__(self, x, y, window, fired_by, laser_type="normal"):

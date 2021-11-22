@@ -4,6 +4,9 @@ from random import randint
 from ScoreEnemies import ScoreEnemy
 from sys import exit
 
+# Main Menu. We have enemy sprites moving from left to right and they continuously spawn until the state is over. Here,
+# the player can either start the game, look at instructions, or quit.
+
 class MainMenuState:
     def __init__(self, window):
         self.background_image = pygame.image.load("images/spacebackground.png").convert_alpha()

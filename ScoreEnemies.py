@@ -1,6 +1,10 @@
 import pygame
 from random import randint
 
+# Non-game enemy sprites used in non-game states such as main menu and score state. All they do is move from left to
+# right. They spawn behind the left side of the window in a random location however has a limit on where its y
+# coordinate could be. The spawning of these are controlled by the states that use them.
+
 
 class ScoreEnemy(pygame.sprite.Sprite):
     def __init__(self, window, y_limit=300, main_menu=False):
